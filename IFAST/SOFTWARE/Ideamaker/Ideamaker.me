@@ -1,0 +1,841 @@
+
+echo paused
+paused
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.024993666455094484,
+    "filepos": 2936,
+    "printTime": 117,
+    "printTimeLeft": 80331,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Paused"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": true,
+      "pausing": false,
+      "printing": false,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Paused"
+  },
+  "temperature": {
+    "E": {
+      "actual": 1.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 61.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 214.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "tool1": {
+      "actual": 220.0,
+      "offset": 0,
+      "target": 215.0
+    }
+  }
+}
+debian@BeagleBone:~$ echo restarted
+restarted
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer^C
+debian@BeagleBone:~$ echo purge
+purge
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.006886878801829509,
+    "filepos": 809,
+    "printTime": 32,
+    "printTimeLeft": 80363,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Printing"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": false,
+      "pausing": false,
+      "printing": true,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Printing"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 61.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 220.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "tool1": {
+      "actual": 220.0,
+      "offset": 0,
+      "target": 220.0
+    }
+  }
+}
+debian@BeagleBone:~$ echo purge2 
+purge2
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.0072529304563148855,
+    "filepos": 852,
+    "printTime": 47,
+    "printTimeLeft": 80348,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Printing"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": false,
+      "pausing": false,
+      "printing": true,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Printing"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 61.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 220.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "tool1": {
+      "actual": 217.0,
+      "offset": 0,
+      "target": 220.0
+    }
+  }
+}
+debian@BeagleBone:~$ echo purge3 curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+purge3 curl -H X-Api-Key: 6CPsxAqxsDqsS_17Qx4Vl1UTJbZ1Ifnf0rE-6u-Kuxk http://localhost:5000/api/job
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": false,
+      "pausing": false,
+      "printing": true,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Printing"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 61.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 219.0,
+      "offset": 0,
+      "target": 215.0
+    },
+    "tool1": {
+      "actual": 218.0,
+      "offset": 0,
+      "target": 220.0
+    }
+  }
+}
+debian@BeagleBone:~$ echo purge4
+purge4
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.014369655645844515,
+    "filepos": 1688,
+    "printTime": 56,
+    "printTimeLeft": 80339,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Pausing"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": false,
+      "pausing": true,
+      "printing": true,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Pausing"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 61.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 219.0,
+      "offset": 0,
+      "target": 215.0
+    },
+    "tool1": {
+      "actual": 218.0,
+      "offset": 0,
+      "target": 220.0
+    }
+  }
+}
+debian@BeagleBone:~$ echo paused
+paused
+debian@BeagleBone:~$ echo resumed
+resumed
+debian@BeagleBone:~$ echo print
+print
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.021069252205844297,
+    "filepos": 2475,
+    "printTime": 67,
+    "printTimeLeft": 80328,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Printing"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": false,
+      "pausing": false,
+      "printing": true,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Printing"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 60.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 214.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "tool1": {
+      "actual": 218.0,
+      "offset": 0,
+      "target": 215.0
+    }
+  }
+}
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.021758791368944656,
+    "filepos": 2556,
+    "printTime": 75,
+    "printTimeLeft": 80320,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Pausing"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": false,
+      "pausing": true,
+      "printing": true,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Pausing"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 60.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 214.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "tool1": {
+      "actual": 220.0,
+      "offset": 0,
+      "target": 215.0
+    }
+  }
+}
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.021758791368944656,
+    "filepos": 2556,
+    "printTime": 75,
+    "printTimeLeft": 80320,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Pausing"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": false,
+      "pausing": true,
+      "printing": true,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Pausing"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 60.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 214.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "tool1": {
+      "actual": 220.0,
+      "offset": 0,
+      "target": 215.0
+    }
+  }
+}
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.021758791368944656,
+    "filepos": 2556,
+    "printTime": 75,
+    "printTimeLeft": 80320,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Pausing"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": false,
+      "pausing": true,
+      "printing": true,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Pausing"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 60.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 214.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "tool1": {
+      "actual": 220.0,
+      "offset": 0,
+      "target": 215.0
+    }
+  }
+}
+debian@BeagleBone:~$ echo paused 
+paused
+debian@BeagleBone:~$ curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/job
+curl -H "X-Api-Key: $PRINTERAPI" http://localhost:5000/api/printer
+{
+  "job": {
+    "averagePrintTime": null,
+    "estimatedPrintTime": 80388.3522552646,
+    "filament": {
+      "tool0": {
+        "length": 118079.50497002392,
+        "volume": 284.01449316115594
+      },
+      "tool1": {
+        "length": 2070.3230999999964,
+        "volume": 4.979710628661633
+      }
+    },
+    "file": {
+      "date": 1778544897,
+      "display": "wavybox2.gcode",
+      "name": "wavybox2.gcode",
+      "origin": "local",
+      "path": "wavybox2.gcode",
+      "size": 11746976
+    },
+    "lastPrintTime": null,
+    "user": "admin"
+  },
+  "progress": {
+    "completion": 0.021758791368944656,
+    "filepos": 2556,
+    "printTime": 75,
+    "printTimeLeft": 80320,
+    "printTimeLeftOrigin": "analysis"
+  },
+  "state": "Paused"
+}
+{
+  "sd": {
+    "ready": false
+  },
+  "state": {
+    "error": "",
+    "flags": {
+      "cancelling": false,
+      "closedOrError": false,
+      "error": false,
+      "finishing": false,
+      "operational": true,
+      "paused": true,
+      "pausing": false,
+      "printing": false,
+      "ready": false,
+      "resuming": false,
+      "sdReady": false
+    },
+    "text": "Paused"
+  },
+  "temperature": {
+    "E": {
+      "actual": 0.0,
+      "offset": 0,
+      "target": null
+    },
+    "bed": {
+      "actual": 61.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "chamber": {
+      "actual": null,
+      "offset": 0,
+      "target": 0.0
+    },
+    "tool0": {
+      "actual": 215.0,
+      "offset": 0,
+      "target": 60.0
+    },
+    "tool1": {
+      "actual": 220.0,
+      "offset": 0,
+      "target": 215.0
+    }
+  }
+}
+debian@BeagleBone:~$ 
+
+Original author: @sudtek

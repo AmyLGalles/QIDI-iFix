@@ -1,0 +1,193 @@
+# October 23, 2024
+# Yannick SUDRIE
+#
+# Purpose: Rework the flow rate calibration G-code for the left nozzle Z2 / T1 of the QIDI IFAST
+# to automatically generate calibration cube series from an existing G-code file
+
+# Values to be requested / entered / provided by the user:
+
+# PLA example
+Filament_Z1_T1_Right_Diameter = 1.75  # Required
+Filament_Z1_T1_Right_Temperature = 205
+Filament_Z1_T1_Right_Compensation = 100
+Filament_Z1_T1_Right_Type = "PLA"
+Filament_Z1_T1_Right_Name = "QIDI-IFAST PLA Purple"
+
+# PETG example
+Filament_Z2_T0_Left_Diameter = 1.724  # Required
+Filament_Z2_T0_Left_Temperature = 235
+Filament_Z2_T0_Left_Compensation = 100
+Filament_Z2_T0_Left_Type = "PETG"
+Filament_Z2_T0_Left_Name = "QIDI-IFAST PETG White"
+
+# We assume there are always 11 hollow 20x20x20 cubes arranged in a single row along the X axis (11C x 1L format).
+# Cubes are ordered left to right in descending order. Since the legend labels may vary,
+# it is more practical to use fixed letters to label the series rather than numbers which change.
+#
+# Example of a series of 11 cubes between 91 and 90 in 0.1 steps:
+# BOX_A=91.0 ; BOX_B=90.9 ; BOX_C=90.8 ... BOX_K=90.0
+
+Upper_Bound = 90  # Flow rate of the leftmost cube, label A
+Lower_Bound = 80  # Flow rate of the rightmost cube, label K
+Step = 1  # Inter-cube step — can only take two values: 0.1 or 1
+
+
+"""
+25_10_2024
+101% -> cube A
+103% -> Letters A to K, bed legend
+105% -> purge tower
+"""
+
+# ------ Identify unique G-CODE SEQUENCE BLOCKS to modify --------
+
+
+# BLOCK_FILAMENT_INFO
+# Block_7_16
+# NBoccurrences = 1
+"""
+;Filament Diameter #1: 1.724
+;Filament Diameter #2: 1.740
+;Filament Compensation #1: 100.00
+;Filament Compensation #2: 100.00
+;Filament Type #1: PETG White
+;Filament Type #2: PLA
+;Filament Name #1: IFAST PETG White SUNLU calibration Dimensions + Thickness
+;Filament Name #2: IFAST PLA RED
+"""
+
+
+# BLOCK_BED_TEMPERATURE
+# LINE_15_15
+# NBoccurrences = 1
+"""
+M190 S65
+"""
+
+
+# BLOCK_FILAMENT_TEMPERATURES
+# LINE_25_27
+# NBoccurrences = 1
+"""
+M104 T0 S205
+M109 T1 S235
+M109 T0 S205
+"""
+
+# BLOCK_ENCLOSURE_TEMPERATURE
+# LINE_40_41
+# NBoccurrences = 1
+"""
+; The temperature of the chamber is set to 40°C
+M141 S40
+"""
+
+# BLOCK_LEFT_FILAMENT_TEMPERATURE
+# Block_50
+# NBoccurrences = 13
+"""
+M104 T1 S235
+"""
+
+# BLOCK_FLOW_RATE_CUBE_A_LEFT_FILAMENT
+# Block_BOX_A.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S101.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_B_LEFT_FILAMENT
+# Block_BOX_B.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S99.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_C_LEFT_FILAMENT
+# Block_BOX_C.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S98.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_D_LEFT_FILAMENT
+# Block_BOX_D.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S97.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_E_LEFT_FILAMENT
+# Block_BOX_E.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S96.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_F_LEFT_FILAMENT
+# Block_BOX_F.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S95.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_G_LEFT_FILAMENT
+# Block_BOX_G.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S94.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_H_LEFT_FILAMENT
+# Block_BOX_H.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S93.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_I_LEFT_FILAMENT
+# Block_BOX_I.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S92.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_J_LEFT_FILAMENT
+# Block_BOX_J.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S91.00
+"""
+
+# BLOCK_FLOW_RATE_CUBE_K_LEFT_FILAMENT
+# Block_BOX_K.3mf
+# NBoccurrences = 100
+"""
+M221 T1 S90.00
+"""
+
+
+# BLOCK_FLOW_RATE_LEGEND_LEFT_FILAMENT
+# Block_letter_series_A_to_K.stl
+# NBoccurrences = 10
+"""
+M221 T1 S103.00
+"""
+
+# BLOCK_FLOW_RATE_PURGE_TOWER_LEFT_FILAMENT
+# Block_PURGE_TOWER.3mf
+# NBoccurrences = 10
+"""
+M221 T1 S105.00
+"""
+
+
+# ------ WARNING: the following G-CODE blocks must NOT be modified!! ------
+
+# Block_20_21
+"""
+;Custom Toolhead: T1 T0
+M221 T1 S100.00
+"""
+
+Original author: @sudtek
