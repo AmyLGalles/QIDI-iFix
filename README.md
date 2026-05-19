@@ -11,10 +11,10 @@ While it technically works, the resulting prints were inconsistent and prone to 
 All copied information should contain appropriate attribution but if your work is featured here and you would like it removed, let me know!
 
 # TODO: 
-- Integrate resources from @sudtek
+- ~~Integrate resources from @sudtek~~
 - Add links to support related groups and document resources and files
 - Add links to resources from MelioratewithNate and Juro Leho
 - Document G-code differences specific to i-fast
 - Document Beagleboard Setup
-- Implement version control on local settings
+- ~~Implement version control on local settings~~
 - Upload Slicer profiles
