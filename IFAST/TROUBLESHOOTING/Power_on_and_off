@@ -1,0 +1,3 @@
+Occasionally there will be a delay in the touch screen turning on and the power button stops working to turn the unit off. Last time this happened, resetting to factory settings using the files from @sudek's repository fixed it.  Now that it's happening again I'd like to pinpoint exactly what's happening there.
+
+In the past, one cause was a corrupted USB drive, but currently I don't have one plugged in so that shouldn't be the issue.  I shut it down a few times recently to stop a constant fan running as well.  I'm going to try unplugging the Beaglebone to see if that's the cause.
