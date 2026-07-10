@@ -1,13 +1,13 @@
 # QIDI i-Fast — Klipper config for BTT Octopus Pro V1.1 (STM32H723)
 # All TMC2209 drivers in UART mode
 #
-# Motor assignments (physical socket → function):
+# Motor assignments:
 #   MOTOR2 → E2 (left extruder)
 #   MOTOR3 → E1 (right extruder)
 #   MOTOR4 → Z2
 #   MOTOR5 → Z1
-#   MOTOR6 → X (config pins swapped with MOTOR7)
-#   MOTOR7 → Y (config pins swapped with MOTOR6)
+#   MOTOR6 → Y
+#   MOTOR7 → X
 #
 # Fan assignments:
 #   FAN0/PA8  → E1 part cooling (24V)
@@ -26,10 +26,6 @@
 [mcu]
 serial: /dev/serial/by-id/usb-Klipper_stm32h723xx_22001F000951333231343036-if00
 
-[mcu eddy]
-serial: /dev/serial/by-id/usb-Klipper_rp2040_50445059303F971C-if00
-restart_method: command
-
 # =============================================
 # PRINTER
 # =============================================
@@ -44,14 +40,13 @@ max_z_accel: 100
 enable_force_move: True
 
 # =============================================
-# X AXIS — MOTOR6 pins (physically swapped with Y)
+# X AXIS — MOTOR7
 # Endstop at front-left (min position)
-# Homing to left also activates T1 (left nozzle)
 # =============================================
 [stepper_x]
-step_pin: PE2
-dir_pin: PE3
-enable_pin: !PD4
+step_pin: PE6
+dir_pin: PA14
+enable_pin: !PE0
 microsteps: 16
 rotation_distance: 34.0
 endstop_pin: !PG14
@@ -62,13 +57,13 @@ homing_speed: 30
 second_homing_speed: 5
 
 # =============================================
-# Y AXIS — MOTOR7 pins (physically swapped with X)
+# Y AXIS — MOTOR6
 # Endstop at front-left (min position)
 # =============================================
 [stepper_y]
-step_pin: PE6
-dir_pin: PA14
-enable_pin: !PE0
+step_pin: PE2
+dir_pin: PE3
+enable_pin: !PD4
 microsteps: 16
 rotation_distance: 34.0
 endstop_pin: !PG15
@@ -79,9 +74,10 @@ homing_speed: 30
 second_homing_speed: 5
 
 # =============================================
-# Z AXIS — MOTOR5 (Z1, left) and MOTOR4 (Z2, right)
+# Z AXIS — MOTOR5 (Z1) and MOTOR4 (Z2)
 # Endstop at bottom (max position, bed fully down)
 # Positive Z = bed moves down (away from nozzle)
+# NOTE: dir_pin inversion may need retesting with new sockets
 # =============================================
 [stepper_z]
 step_pin: PC13
@@ -90,12 +86,12 @@ enable_pin: !PF1
 microsteps: 16
 rotation_distance: 8.0
 endstop_pin: !PG13
-position_endstop: 325
 position_min: -5
 position_max: 330
 homing_speed: 8
 second_homing_speed: 4
 homing_positive_dir: true
+position_endstop: 325
 
 [stepper_z1]
 step_pin: PF9
@@ -106,9 +102,9 @@ rotation_distance: 8.0
 endstop_pin: !PG12
 
 # =============================================
-# HOMING OVERRIDE — supports individual axis homing
-# Homing X activates T1 physically (left nozzle)
+# HOMING OVERRIDE — Y must home first
 # =============================================
+
 [homing_override]
 gcode:
     {% set home_all = 'X' not in params and 'Y' not in params and 'Z' not in params %}
@@ -122,7 +118,6 @@ gcode:
     {% endif %}
     {% if home_all or 'X' in params %}
         G28 X
-        ACTIVATE_EXTRUDER EXTRUDER=extruder1
     {% endif %}
     {% if home_all or 'Z' in params %}
         G28 Z
@@ -131,18 +126,17 @@ axes: xyz
 
 # =============================================
 # EXTRUDER 1 (right, E1) — MOTOR3
-# PT1000 via analog input T0
-# E1 heater must be wired directly to HE0 (bypass breakout boards)
+# PT1000 via onboard MAX31865
 # =============================================
 [extruder]
 step_pin: PG4
 dir_pin: !PC1
 enable_pin: !PA2
 microsteps: 16
+# rotation_distance: 34.24
 rotation_distance: 22.94
 nozzle_diameter: 0.400
 filament_diameter: 1.750
-max_extrude_only_distance: 150
 heater_pin: PA0
 sensor_type: PT1000
 sensor_pin: PF4
@@ -153,10 +147,12 @@ pid_Kd: 98
 min_temp: 0
 max_temp: 300
 min_extrude_temp: 180
+max_extrude_only_distance: 150
 
 # =============================================
 # EXTRUDER 2 (left, E2) — MOTOR2
 # PT1000 via analog input T1
+# Nozzle offset: -34mm in X, 0 in Y relative to E1
 # =============================================
 [extruder1]
 step_pin: PF11
@@ -166,7 +162,6 @@ microsteps: 16
 rotation_distance: 21.57
 nozzle_diameter: 0.400
 filament_diameter: 1.750
-max_extrude_only_distance: 150
 heater_pin: PA3
 sensor_type: PT1000
 sensor_pin: PF5
@@ -177,11 +172,10 @@ pid_Kd: 98
 min_temp: 0
 max_temp: 300
 min_extrude_temp: 180
+max_extrude_only_distance: 150
 
 # =============================================
 # HEATED BED — via relay board
-# Octopus HB output → relay control in
-# 24V PSU → relay DC in → bed heater
 # =============================================
 [heater_bed]
 heater_pin: PA1
@@ -212,15 +206,26 @@ max_temp: 80
 # TMC2209 DRIVER CONFIGURATION
 # =============================================
 
-# X — MOTOR6 pins
+# X — MOTOR6
+[stepper_x]
+step_pin: PE2
+dir_pin: PE3
+enable_pin: !PD4
+
 [tmc2209 stepper_x]
 uart_pin: PE1
 run_current: 0.650
 stealthchop_threshold: 999999
 
-# Y — MOTOR7 pins
+# Y — MOTOR7
+[stepper_y]
+step_pin: PE6
+dir_pin: PA14
+enable_pin: !PE0
+
 [tmc2209 stepper_y]
 uart_pin: PD3
+uart_address: 0
 run_current: 0.650
 stealthchop_threshold: 999999
 
@@ -287,39 +292,9 @@ idle_timeout: 60
 pin: PB11
 
 # =============================================
-# BTT EDDY DUO PROBE
+# MISC
 # =============================================
-[probe_eddy_current btt_eddy]
-sensor_type: ldc1612
-i2c_mcu: eddy
-i2c_bus: i2c0f
-x_offset: 26.86
-y_offset: -12.82
-descend_z: 1.0
 
-[temperature_sensor btt_eddy_mcu]
-sensor_type: temperature_mcu
-sensor_mcu: eddy
-min_temp: 10
-max_temp: 100
-
-[temperature_sensor btt_eddy]
-sensor_type: Generic 3950
-sensor_pin: eddy:gpio26
-
-# =============================================
-# BED MESH
-# =============================================
-[bed_mesh]
-speed: 120
-horizontal_move_z: 5
-mesh_min: 70, 60
-mesh_max: 345, 230
-probe_count: 5, 5
-
-# =============================================
-# Z TILT — stepper_z is LEFT, stepper_z1 is RIGHT
-# =============================================
 [z_tilt]
 z_positions:
     0, 127
@@ -332,10 +307,35 @@ horizontal_move_z: 5
 retries: 10
 retry_tolerance: 0.05
 
-# =============================================
-# TOOL CHANGE MACROS
-# T0 = right nozzle (E1), T1 = left nozzle (E2)
-# =============================================
+[mcu eddy]
+serial: /dev/serial/by-id/usb-Klipper_rp2040_50445059303F971C-if00
+restart_method: command
+
+[probe_eddy_current btt_eddy]
+sensor_type: ldc1612
+i2c_mcu: eddy
+i2c_bus: i2c0f
+x_offset: 26.86
+y_offset: -13.82
+z_offset: 1
+
+[temperature_sensor btt_eddy_mcu]
+sensor_type: temperature_mcu
+sensor_mcu: eddy
+min_temp: 10
+max_temp: 100
+
+[temperature_sensor btt_eddy]
+sensor_type: Generic 3950
+sensor_pin: eddy:gpio26
+
+[bed_mesh]
+speed: 120
+mesh_min: 70, 60
+mesh_max: 345, 230
+horizontal_move_z: 5
+probe_count: 5, 5
+
 [gcode_macro T0]
 gcode:
     {% if "xyz" in printer.toolhead.homed_axes %}
@@ -343,7 +343,6 @@ gcode:
         G1 X370 F6000
     {% endif %}
     ACTIVATE_EXTRUDER EXTRUDER=extruder
-    SET_GCODE_OFFSET Z=-0.1 MOVE=1
 
 [gcode_macro T1]
 gcode:
@@ -352,23 +351,77 @@ gcode:
         G1 X5 F6000
     {% endif %}
     ACTIVATE_EXTRUDER EXTRUDER=extruder1
-    SET_GCODE_OFFSET Z=-0.250 MOVE=1
 
-# =============================================
-# CANCEL PRINT MACRO
-# =============================================
 [gcode_macro CANCEL_PRINT]
 rename_existing: BASE_CANCEL_PRINT
 gcode:
     TURN_OFF_HEATERS
     M106 S0
-    {% if printer.extruder.temperature > 170 %}
-        G92 E0
-        G1 E-5 F1800
-    {% endif %}
+    G92 E0
+    G1 E-5 F1800
     G91
     G1 Z10 F300
     G90
     G1 X0 Y0 F6000
     M84
     BASE_CANCEL_PRINT
+
+#*# <---------------------- SAVE_CONFIG ---------------------->
+#*# DO NOT EDIT THIS BLOCK OR BELOW. The contents are auto-generated.
+#*#
+#*# [probe_eddy_current btt_eddy]
+#*# reg_drive_current = 15
+#*# calibrate =
+#*# 	0.050000:3227642.662,0.090000:3226636.301,0.130000:3225608.454,
+#*# 	0.170000:3224476.553,0.210000:3223029.134,0.250000:3221645.561,
+#*# 	0.290000:3220252.301,0.330000:3218944.080,0.370000:3217623.460,
+#*# 	0.410000:3216372.546,0.450000:3215099.111,0.490000:3213891.660,
+#*# 	0.530000:3212685.857,0.570000:3211531.076,0.610000:3210355.915,
+#*# 	0.650000:3209259.467,0.690000:3208141.844,0.730000:3207088.895,
+#*# 	0.770000:3206009.968,0.810000:3205001.543,0.850000:3203981.996,
+#*# 	0.890000:3203025.652,0.930000:3202040.638,0.970000:3201110.344,
+#*# 	1.010000:3200170.705,1.050000:3199277.787,1.090000:3198372.821,
+#*# 	1.130000:3197536.611,1.170000:3196688.265,1.210000:3195877.426,
+#*# 	1.250000:3195055.822,1.290000:3194279.544,1.330000:3193497.362,
+#*# 	1.370000:3192749.072,1.410000:3191996.248,1.450000:3191268.582,
+#*# 	1.490000:3190546.464,1.530000:3189859.611,1.570000:3189169.954,
+#*# 	1.610000:3188521.807,1.650000:3187860.253,1.690000:3187243.363,
+#*# 	1.730000:3186599.811,1.770000:3185989.090,1.810000:3185380.840,
+#*# 	1.850000:3184791.270,1.890000:3184199.939,1.930000:3183652.943,
+#*# 	1.970000:3183085.942,2.010000:3182544.565,2.050000:3181999.683,
+#*# 	2.090000:3181493.114,2.130000:3180960.202,2.170000:3180468.571,
+#*# 	2.210000:3179967.839,2.250000:3179495.033,2.290000:3179009.471,
+#*# 	2.330000:3178557.987,2.370000:3178087.138,2.410000:3177647.134,
+#*# 	2.450000:3177204.212,2.490000:3176778.900,2.530000:3176347.890,
+#*# 	2.570000:3175939.833,2.610000:3175521.788,2.650000:3175131.050,
+#*# 	2.690000:3174726.777,2.730000:3174344.780,2.770000:3173971.109,
+#*# 	2.810000:3173606.472,2.850000:3173244.292,2.890000:3172886.975,
+#*# 	2.930000:3172536.106,2.970000:3172191.138,3.010000:3171853.445,
+#*# 	3.050000:3171518.455,3.090000:3171182.681,3.130000:3170864.478,
+#*# 	3.170000:3170540.439,3.210000:3170238.250,3.250000:3169920.029,
+#*# 	3.290000:3169627.304,3.330000:3169329.650,3.370000:3169052.578,
+#*# 	3.410000:3168766.487,3.450000:3168493.735,3.490000:3168224.212,
+#*# 	3.530000:3167959.778,3.570000:3167693.507,3.610000:3167444.551,
+#*# 	3.650000:3167187.474,3.690000:3166940.997,3.730000:3166691.684,
+#*# 	3.770000:3166456.893,3.810000:3166216.271,3.850000:3165992.035,
+#*# 	3.890000:3165755.929,3.930000:3165530.519,3.970000:3165312.882,
+#*# 	4.010000:3165097.993,4.050000:3164886.628
+#*#
+#*# [bed_mesh default]
+#*# version = 1
+#*# points =
+#*# 	  0.165370, 0.099254, 0.121802, 0.218062, 0.180394
+#*# 	  0.021690, 0.087625, 0.054649, 0.091381, 0.005476
+#*# 	  -0.095947, 0.169725, 0.055687, 0.014724, -0.089023
+#*# 	  -0.130039, 0.184438, 0.015204, 0.028773, -0.087491
+#*# 	  -0.140293, 0.212103, -0.010353, 0.025022, -0.110499
+#*# x_count = 5
+#*# y_count = 5
+#*# mesh_x_pps = 2
+#*# mesh_y_pps = 2
+#*# algo = lagrange
+#*# tension = 0.2
+#*# min_x = 70.0
+#*# max_x = 345.0
+#*# min_y = 60.0
+#*# max_y = 230.0
