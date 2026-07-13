@@ -38,3 +38,10 @@ type = web
 persistent_files = 
 	config.json
 
+[update_manager mainsail-config]
+managed_services = klipper
+origin = https://github.com/mainsail-crew/mainsail-config.git
+path = /home/pi/mainsail-config
+primary_branch = master
+type = git_repo
+
